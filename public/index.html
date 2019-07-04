@@ -7,8 +7,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
    
 </head>
-<body>
-     <script src="products.js"></script>    
+<body onclick="stopAlert()">
+    <div>
+        <input id="input" onInput="search()"><button id="search">Search</button><br>
+        Categories:
+        <select onchange="categories(value)">
+            <option id="all" class="options" value="all">--Choose--</option>
+            <option class="options" value="food">Food</option>
+            <option class="options" value="electronics">Electronics</option>
+            <option class="options" value="sporting">Sporting</option>
+        </select><hr>
+        <div id="products"></div><br>
+        <div id="details"></div><br><hr>
+        <button id="view" onclick="viewCart(cart)">View Cart</button>
+        <button onclick="clearCart()">Clear Cart</button>
+        <div id="cart"></div>
+        <button onclick="checkout()">Proceed to Checkout</button>
+        <div id="form"></div>
+        <button onclick="placeOrder()">Place Order</button>
+        <div id="price"></div>
+    </div>
+
+    <script src="products.js"></script>    
     <script src="index.js"></script>   
 </body>
 </html>
