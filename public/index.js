@@ -26,15 +26,18 @@ function Products(products) {
             </div><br>`
         }
     document.getElementById("products").innerHTML = productDivs;
+    
 }
 
 window.onload = function() {
     Products(products);
-    console.log(products);
     let retrievedObject = sessionStorage.getItem('cartSession');
-    cart = JSON.parse(retrievedObject);
     let retrievedPrice = sessionStorage.getItem('priceSession');
-    totalPrice = JSON.parse(retrievedPrice);
+    if (retrievedObject != null) {
+        cart = JSON.parse(retrievedObject);
+        totalPrice = JSON.parse(retrievedPrice);
+    }
+    console.log(products);
     console.log(cart, totalPrice);
 }
 
@@ -86,6 +89,11 @@ function categories(target) {
 
 function removeItem(target) {
     cart.splice(target, 1);
+    totalPrice.splice(target, 1)
+    let cartStr = JSON.stringify(cart);
+    sessionStorage.setItem("cartSession", cartStr);
+    let priceStr = JSON.stringify(totalPrice);
+    sessionStorage.setItem("priceSession", priceStr);
     viewCart(cart);
     Products(products);
     console.log(cart)
@@ -131,7 +139,7 @@ function checkout() {
 }
 
 function placeOrder() {
-    let total = [];
+    let total = [0];
     for (let i=0; i<totalPrice.length; i++) {
         let num = totalPrice[i].split('')
         num.shift();
