@@ -37,7 +37,6 @@ window.onload = function() {
         cart = JSON.parse(retrievedObject);
         totalPrice = JSON.parse(retrievedPrice);
     }
-    console.log(products);
     console.log(cart, totalPrice);
 }
 
@@ -96,7 +95,8 @@ function removeItem(target) {
     sessionStorage.setItem("priceSession", priceStr);
     viewCart(cart);
     Products(products);
-    console.log(cart)
+    console.log(cart);
+    console.log(totalPrice);
 }
 
 function viewDetails(target) {
@@ -129,7 +129,7 @@ function search() {
 }
 
 function checkout() {
-    let form =
+    let form =   
         `<form>
             First Name: <input></input><br>
             Last Name: <input></input><br>
@@ -146,13 +146,10 @@ function placeOrder() {
         let go = num.join('');
         total.push(go);
     }
-    console.log("1: " + total)
     let newPrice = total.map(p=>Number(p));
-    console.log("2: " + newPrice)
     let price = newPrice.reduce((p,j)=>{return p+j});
     price = '$'+price.toFixed(2);
     document.getElementById("price").innerHTML = price;
-    console.log("3: " + price)
 }
 
 let timeout;
