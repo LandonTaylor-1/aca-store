@@ -1,6 +1,9 @@
+// create global variables to be accessed to from severl different functions
 let cart = [];
 let totalPrice = [];
 
+// creates the list of products pulling from product.js
+// loops through the products and creates a div for each one
 function Products(products) {
     let productDivs = "";
     for (let i=0; i < products.length; i++) {
@@ -26,22 +29,30 @@ function Products(products) {
             </div><br>`
         }
     document.getElementById("products").innerHTML = productDivs;
-    
 }
+// product.id is used to capture the item because we needed to pass in a number to the addToCart
+// function so to be used as an index
 
 window.onload = function() {
     Products(products);
     let retrievedObject = sessionStorage.getItem('cartSession');
     let retrievedPrice = sessionStorage.getItem('priceSession');
+    // an error will occur if the sessionStorage.getItem is ran when the sessionStorage is empty
     if (retrievedObject != null) {
         cart = JSON.parse(retrievedObject);
         totalPrice = JSON.parse(retrievedPrice);
     }
     console.log(cart, totalPrice);
 }
+// loading the product list upon onload
+// retrieving the sessionStorage upon onload
 
+// using target as parameter since the function was first declared in the products function
 function addToCart(target) {
     let quantity = document.getElementById(target).value;
+    // retrieves the product.id-1 (for index)
+    // the product.id-1 was used as an id to allow the function to also use the quantity selector
+    // the item will be pushed to the cart the quantity selected by decreaing quantity by 1 each time.
     while (quantity != 0) {
         totalPrice.push(products[target].price);
         cart.push(products[target].name);
@@ -49,6 +60,7 @@ function addToCart(target) {
     }
     console.log(cart);
     console.log(totalPrice);
+    // turn global arrays into strings to setItem in storageSession each time an item is added to the cart.
     let cartStr = JSON.stringify(cart);
     sessionStorage.setItem("cartSession", cartStr);
     let priceStr = JSON.stringify(totalPrice);
@@ -57,6 +69,7 @@ function addToCart(target) {
     Products(products);
 }
 
+// the cart array is made visiable and takes in the target parameter which is calling product.is-1
 function viewCart(target) {
     let cartDivs = "";
     for (let i = 0; i < target.length; i++) {
@@ -69,13 +82,17 @@ function viewCart(target) {
     }
     document.getElementById("cart").innerHTML = cartDivs;
 }
+// creates a div for each item added to the cart and also creates a remove button
+// the parameter is product.id-1.indexOf(product.id-1[i])
 
+// both arrays are emptied by declaring empty arrays
 function clearCart() {
     cart = [];
     totalPrice = [];
     viewCart(cart);
 }
 
+// 
 function categories(target) {
     document.getElementById("all").innerHTML = "All";
     if (target === "all") {
