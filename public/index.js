@@ -1,6 +1,8 @@
 // create global variables to be accessed to from severl different functions
 let cart = [];
 let totalPrice = [];
+let emailArr = [];
+let passwordArr = [];
 
 // creates the list of products pulling from product.js
 // loops through the products and creates a div for each one
@@ -34,6 +36,9 @@ function Products(products) {
 // function so to be used as an index
 
 window.onload = function() {
+    // while (document.getElementById("signin").style.display = "block") {
+    //     document.getElementById("shopping").style.display = "none";
+    // }
     Products(products);
     let retrievedObject = sessionStorage.getItem('cartSession');
     let retrievedPrice = sessionStorage.getItem('priceSession');
@@ -46,6 +51,16 @@ window.onload = function() {
 }
 // loading the product list upon onload
 // retrieving the sessionStorage upon onload
+
+function sign() {
+    document.getElementById("sign").style.display = "none";
+    document.getElementById("shopping").style.display = "block";
+    // let email = document.getElementById("email").value;
+    // let password = document.getElementById("password").value;
+    // emailArr.push(email);
+    // passwordArr.push(password);
+    // console.log(emailArr, passwordArr)
+}
 
 // using target as parameter since the function was first declared in the products function
 function addToCart(target) {
