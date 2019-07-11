@@ -5,10 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>My Store</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   
+    <link rel="stylesheet" href="index.css">
+
 </head>
 <body onclick="stopAlert()">
-    <div>
+    <div id="sign">
+        Email: <input id="email"><br>
+        Password: <input is="password"><br>
+        <button onclick="sign()">Sign In</button>
+    </div>
+    <div id="shopping" style="display: none">
         <input id="input" onInput="search()"><button id="search">Search</button><br>
         Categories:
         <select onchange="categories(value)">
@@ -28,6 +34,7 @@
         <div id="price"></div>
     </div>
 
+    <script src="cats.js"></script>
     <script src="products.js"></script>    
     <script src="index.js"></script>   
 </body>
