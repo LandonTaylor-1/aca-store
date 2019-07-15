@@ -1,8 +1,7 @@
 // create global variables to be accessed to from severl different functions
 let cart = [];
 let totalPrice = [];
-let emailArr = [];
-let passwordArr = [];
+let login = [];
 
 // creates the list of products pulling from product.js
 // loops through the products and creates a div for each one
@@ -39,14 +38,25 @@ window.onload = function() {
     // while (document.getElementById("signin").style.display = "block") {
     //     document.getElementById("shopping").style.display = "none";
     // }
-    Products(products);
-    let retrievedObject = sessionStorage.getItem('cartSession');
-    let retrievedPrice = sessionStorage.getItem('priceSession');
-    // an error will occur if the sessionStorage.getItem is ran when the sessionStorage is empty
-    if (retrievedObject != null) {
-        cart = JSON.parse(retrievedObject);
-        totalPrice = JSON.parse(retrievedPrice);
-    }
+    fetch("https://acastore.herokuapp.com/products")
+    .then(res=>res.json())
+    .then(items=>{
+        Products(items)
+        console.log(items)
+    })
+    // let retrievedObject = sessionStorage.getItem('cartSession');
+    // let retrievedPrice = sessionStorage.getItem('priceSession');
+    // // an error will occur if the sessionStorage.getItem is ran when the sessionStorage is empty
+    // if (retrievedObject != null) {
+    //     cart = JSON.parse(retrievedObject);
+    //     totalPrice = JSON.parse(retrievedPrice);
+    let retrieveSignIn = localStorage.getItem("signInSession");
+    login = JSON.parse(retrieveSignIn);
+    if (login != null) {
+        document.getElementById("sign").style.display = "none";
+        document.getElementById("shopping").style.display = "block";
+    } 
+    // }
     console.log(cart, totalPrice);
 }
 // loading the product list upon onload
@@ -55,11 +65,27 @@ window.onload = function() {
 function sign() {
     document.getElementById("sign").style.display = "none";
     document.getElementById("shopping").style.display = "block";
-    // let email = document.getElementById("email").value;
-    // let password = document.getElementById("password").value;
-    // emailArr.push(email);
-    // passwordArr.push(password);
-    // console.log(emailArr, passwordArr)
+    let email = document.getElementById("email").value;
+    let password = document.getElementById("password").value;
+    const newUser = new Object
+    newUser.email = email;
+    newUser.password = password;
+    newUser.cartId = null;
+    localStorage.setItem("signInSession", JSON.stringify(newUser));
+    if (newUser.email != login) {
+        fetch("https://acastore.herokuapp.com/users", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newUser),
+        })
+    }
+    //.then(response => response.json())
+}
+
+function shoppingCart() {
+
 }
 
 // using target as parameter since the function was first declared in the products function
@@ -68,20 +94,24 @@ function addToCart(target) {
     // retrieves the product.id-1 (for index)
     // the product.id-1 was used as an id to allow the function to also use the quantity selector
     // the item will be pushed to the cart the quantity selected by decreaing quantity by 1 each time.
-    while (quantity != 0) {
-        totalPrice.push(products[target].price);
-        cart.push(products[target].name);
-        quantity -= 1
-    }
-    console.log(cart);
-    console.log(totalPrice);
-    // turn global arrays into strings to setItem in storageSession each time an item is added to the cart.
-    let cartStr = JSON.stringify(cart);
-    sessionStorage.setItem("cartSession", cartStr);
-    let priceStr = JSON.stringify(totalPrice);
-    sessionStorage.setItem("priceSession", priceStr);
-    viewCart(cart);
-    Products(products);
+    fetch("https://acastore.herokuapp.com/products")
+    .then(res=>res.json())
+    .then(items=>{items;
+        while (quantity != 0) {
+            totalPrice.push(items[target].price);
+            cart.push(items[target].name);
+            quantity -= 1
+        }
+        console.log(cart);
+        console.log(totalPrice);
+        // turn global arrays into strings to setItem in storageSession each time an item is added to the cart.
+        // let cartStr = JSON.stringify(cart);
+        // sessionStorage.setItem("cartSession", cartStr);
+        // let priceStr = JSON.stringify(totalPrice);
+        // sessionStorage.setItem("priceSession", priceStr);
+        viewCart(cart);
+        Products(items);
+    })
 }
 
 // the cart array is made visiable and takes in the target parameter which is calling product.is-1
@@ -110,23 +140,27 @@ function clearCart() {
 // 
 function categories(target) {
     document.getElementById("all").innerHTML = "All";
-    if (target === "all") {
-        Products(products)
-    } else {
-    let cat = products.filter(p=>p.category == target)
-    Products(cat);
-    }
+    fetch("https://acastore.herokuapp.com/products")
+    .then(res=>res.json())
+    .then(items=>{items;
+        if (target === "all") {
+            Products(items)
+        } else {
+        let cat = items.filter(p=>p.category == target)
+        Products(cat);
+        }
+    })
 }
 
 function removeItem(target) {
     cart.splice(target, 1);
     totalPrice.splice(target, 1)
-    let cartStr = JSON.stringify(cart);
-    sessionStorage.setItem("cartSession", cartStr);
-    let priceStr = JSON.stringify(totalPrice);
-    sessionStorage.setItem("priceSession", priceStr);
+    // let cartStr = JSON.stringify(cart);
+    // sessionStorage.setItem("cartSession", cartStr);
+    // let priceStr = JSON.stringify(totalPrice);
+    // sessionStorage.setItem("priceSession", priceStr);
     viewCart(cart);
-    Products(products);
+    //Products(products);
     console.log(cart);
     console.log(totalPrice);
 }
@@ -136,14 +170,18 @@ function viewDetails(target) {
         document.getElementById("products").style.display = "none";
         document.getElementById("details").style.display = "block";
     }
-    let showDetails = 
-    `<div id="details">
-        <button onclick=hideDetails()>Back to Product List</button>
-        <div>Price: ${products[target].price}</div><br>
-        <div>Description: ${products[target].description}</div><br>
-        <img src=${products[target].imgUrl}></img>
-    <div>`
-    document.getElementById("details").innerHTML = showDetails;
+    fetch("https://acastore.herokuapp.com/products")
+    .then(res=>res.json())
+    .then(items=>{items;
+        let showDetails = 
+        `<div id="details">
+            <button onclick=hideDetails()>Back to Product List</button>
+            <div>Price: ${items[target].price}</div><br>
+            <div>Description: ${items[target].description}</div><br>
+            <img src=${items[target].imgUrl}></img>
+        <div>`
+        document.getElementById("details").innerHTML = showDetails;
+    })
 }
 
 function hideDetails() {
@@ -156,12 +194,16 @@ function hideDetails() {
 function search() {
     let searchWord = document.getElementById("input").value;
     let newWord = searchWord.toLowerCase();
-    let filteredProducts = products.filter(p=>p.name.toLowerCase().includes(newWord));
-    Products(filteredProducts);
+    fetch("https://acastore.herokuapp.com/products")
+    .then(res=>res.json())
+    .then(items=>{items;
+        let filteredProducts = items.filter(p=>p.name.toLowerCase().includes(newWord));
+        Products(filteredProducts);
+    })
 }
 
 function checkout() {
-    let form =   
+    let form =
         `<form>
             First Name: <input></input><br>
             Last Name: <input></input><br>
@@ -182,6 +224,52 @@ function placeOrder() {
     let price = newPrice.reduce((p,j)=>{return p+j});
     price = '$'+price.toFixed(2);
     document.getElementById("price").innerHTML = price;
+}
+
+function newItem() {
+    document.getElementById("newItemInput").style.display = "block";
+    document.getElementById("shopping").style.display = "none";
+}
+
+function addItem() {
+    let newName = document.getElementById("newName").value;
+    let newDescription = document.getElementById("newDescription").value;
+    let newPrice = document.getElementById("newPrice").value;
+    const newProduct = new Object
+    newProduct.name = newName;
+    newProduct.description = newDescription;
+    newProduct.price = newPrice;
+    fetch("https://acastore.herokuapp.com/products", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newProduct),
+    })
+    document.getElementById("newItemInput").style.display = "none";
+    document.getElementById("shopping").style.display = "block";
+}
+
+function deleteItem() {
+    let newId = document.getElementById("id").value;
+    console.log(newId)
+    fetch("https://acastore.herokuapp.com/products/" + newId, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+    document.getElementById("newItemInput").style.display = "none";
+    document.getElementById("shopping").style.display = "block";
+}
+
+function hideDetailsTwo() {
+    // if (document.getElementById("details").style.display = "block") {
+    //     document.getElementById("products").style.display = "block";
+    //     document.getElementById("details").style.display = "none";
+    // }
+    document.getElementById("newItemInput").style.display = "none";
+    document.getElementById("shopping").style.display = "block";
 }
 
 let timeout;

@@ -11,7 +11,7 @@
 <body onclick="stopAlert()">
     <div id="sign">
         Email: <input id="email"><br>
-        Password: <input is="password"><br>
+        Password: <input id="password"><br>
         <button onclick="sign()">Sign In</button>
     </div>
     <div id="shopping" style="display: none">
@@ -32,10 +32,19 @@
         <div id="form"></div>
         <button onclick="placeOrder()">Place Order</button>
         <div id="price"></div>
+        <button onclick="newItem()">Create New Product</button>
+    </div>
+    <div id="newItemInput" style="display: none">
+        <button onclick=hideDetailsTwo()>Back to Product List</button><br>
+        Name: <input id="newName"><br>
+        Description: <input id="newDescription"><br>
+        Price: <input id="newPrice"><br>
+        <Button onclick="addItem()">Add New Product</Button><br>
+        Id: <input id="id"><br>
+        <button onclick="deleteItem()">Delete Product</button>
     </div>
 
-    <script src="cats.js"></script>
-    <script src="products.js"></script>    
+    <!-- <script src="products.js"></script>     -->
     <script src="index.js"></script>   
 </body>
 </html>
