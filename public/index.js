@@ -38,7 +38,7 @@ window.onload = function() {
     // while (document.getElementById("signin").style.display = "block") {
     //     document.getElementById("shopping").style.display = "none";
     // }
-    fetch("https://acastore.herokuapp.com/products")
+    fetch("http://localhost:3000/products")
     .then(res=>res.json())
     .then(items=>{
         Products(items)
@@ -55,7 +55,8 @@ window.onload = function() {
     if (login != null) {
         document.getElementById("sign").style.display = "none";
         document.getElementById("shopping").style.display = "block";
-    } 
+    }
+
     // }
     console.log(cart, totalPrice);
 }
@@ -63,24 +64,29 @@ window.onload = function() {
 // retrieving the sessionStorage upon onload
 
 function sign() {
-    document.getElementById("sign").style.display = "none";
-    document.getElementById("shopping").style.display = "block";
-    let email = document.getElementById("email").value;
-    let password = document.getElementById("password").value;
-    const newUser = new Object
-    newUser.email = email;
-    newUser.password = password;
-    newUser.cartId = null;
-    localStorage.setItem("signInSession", JSON.stringify(newUser));
-    if (newUser.email != login) {
-        fetch("https://acastore.herokuapp.com/users", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newUser),
-        })
-    }
+    fetch("http://localhost:3000/users")
+    .then(res=>res.json())
+    .then(items=>{items
+        document.getElementById("sign").style.display = "none";
+        document.getElementById("shopping").style.display = "block";
+        let email = document.getElementById("email").value;
+        let password = document.getElementById("password").value;
+        const newUser = new Object
+        newUser.id = items[items.length-1].id +1;
+        newUser.email = email;
+        newUser.password = password;
+        newUser.cartId = items[items.length-1].id +1;
+        localStorage.setItem("signInSession", JSON.stringify(newUser));
+        if (newUser.email != login) {
+            fetch("http://localhost:3000/users", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newUser),
+            })
+        }
+    })    
     //.then(response => response.json())
 }
 
@@ -94,7 +100,7 @@ function addToCart(target) {
     // retrieves the product.id-1 (for index)
     // the product.id-1 was used as an id to allow the function to also use the quantity selector
     // the item will be pushed to the cart the quantity selected by decreaing quantity by 1 each time.
-    fetch("https://acastore.herokuapp.com/products")
+    fetch("http://localhost:3000/products")
     .then(res=>res.json())
     .then(items=>{items;
         while (quantity != 0) {
@@ -140,7 +146,7 @@ function clearCart() {
 // 
 function categories(target) {
     document.getElementById("all").innerHTML = "All";
-    fetch("https://acastore.herokuapp.com/products")
+    fetch("http://localhost:3000/products")
     .then(res=>res.json())
     .then(items=>{items;
         if (target === "all") {
@@ -170,7 +176,7 @@ function viewDetails(target) {
         document.getElementById("products").style.display = "none";
         document.getElementById("details").style.display = "block";
     }
-    fetch("https://acastore.herokuapp.com/products")
+    fetch("http://localhost:3000/products")
     .then(res=>res.json())
     .then(items=>{items;
         let showDetails = 
@@ -194,7 +200,7 @@ function hideDetails() {
 function search() {
     let searchWord = document.getElementById("input").value;
     let newWord = searchWord.toLowerCase();
-    fetch("https://acastore.herokuapp.com/products")
+    fetch("http://localhost:3000/products")
     .then(res=>res.json())
     .then(items=>{items;
         let filteredProducts = items.filter(p=>p.name.toLowerCase().includes(newWord));
@@ -232,19 +238,24 @@ function newItem() {
 }
 
 function addItem() {
-    let newName = document.getElementById("newName").value;
-    let newDescription = document.getElementById("newDescription").value;
-    let newPrice = document.getElementById("newPrice").value;
-    const newProduct = new Object
-    newProduct.name = newName;
-    newProduct.description = newDescription;
-    newProduct.price = newPrice;
-    fetch("https://acastore.herokuapp.com/products", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newProduct),
+    fetch("http://localhost:3000/products")
+    .then(res=>res.json())
+    .then(items=>{items
+        let newName = document.getElementById("newName").value;
+        let newDescription = document.getElementById("newDescription").value;
+        let newPrice = document.getElementById("newPrice").value;
+        const newProduct = new Object
+        newProduct.id = items[items.length-1].id +1;
+        newProduct.name = newName;
+        newProduct.description = newDescription;
+        newProduct.price = newPrice;
+        fetch("http://localhost:3000/products", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newProduct),
+        })
     })
     document.getElementById("newItemInput").style.display = "none";
     document.getElementById("shopping").style.display = "block";
@@ -252,8 +263,8 @@ function addItem() {
 
 function deleteItem() {
     let newId = document.getElementById("id").value;
-    console.log(newId)
-    fetch("https://acastore.herokuapp.com/products/" + newId, {
+    //console.log(newId)
+    fetch("http://localhost:3000/products/" + newId, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

@@ -17,9 +17,12 @@
   },
   "homepage": "https://github.com/LandonTaylor-1/aca-store#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "cross-fetch": "^3.0.4",
     "es6-promise": "^4.2.8",
+    "express": "^4.17.1",
     "isomorphic-fetch": "^2.2.1",
     "node-fetch": "^2.6.0"
-  }
+  },
+  "devDependencies": {}
 }
