@@ -1,6 +1,10 @@
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
+const carts = require('./db').carts;
+const comments = require('./db').comments;
+const orders = require('./db').orders;
 const products = require('./db').products;
+const users = require('./db').users;
 
 // change this to your mongodb atlas uri
 const url = 'mongodb+srv://user-1:12345@aca-practice-jd9cz.mongodb.net/test?retryWrites=true';

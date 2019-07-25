@@ -22,6 +22,7 @@
     "es6-promise": "^4.2.8",
     "express": "^4.17.1",
     "isomorphic-fetch": "^2.2.1",
+    "mongodb": "^3.3.0-beta2",
     "node-fetch": "^2.6.0"
   },
   "devDependencies": {}
