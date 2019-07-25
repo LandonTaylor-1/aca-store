@@ -17,12 +17,137 @@ exports.users = [
     {
       "id": 1,
       "userId": 1,
-      "products": []
+      "products": [
+        {
+          "id": 2,
+          "name": "Topiramate",
+          "description": "A wonderful medicine that makes everything all better",
+          "rating": 2,
+          "imgUrl": "http://dummyimage.com/125x134.jpg/cc0000/ffffff",
+          "price": "$37.09",
+          "category": "food",
+          "reviews": [
+            {
+              "description": "architect revolutionary deliverables",
+              "rating": 2
+            },
+            {
+              "description": "orchestrate dynamic schemas",
+              "rating": 2
+            },
+            {
+              "description": "aggregate integrated convergence",
+              "rating": 4
+            },
+            {
+              "description": "incubate strategic e-tailers",
+              "rating": 5
+            },
+            {
+              "description": "transition synergistic partnerships",
+              "rating": 1
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "name": "Decolorized Iodine",
+          "description": "Kills germs on contact",
+          "rating": 1,
+          "imgUrl": "http://dummyimage.com/120x245.jpg/cc0000/ffffff",
+          "price": "$70.10",
+          "category": "electronics",
+          "reviews": [
+            {
+              "description": "architect revolutionary deliverables",
+              "rating": 2
+            },
+            {
+              "description": "orchestrate dynamic schemas",
+              "rating": 2
+            },
+            {
+              "description": "aggregate integrated convergence",
+              "rating": 4
+            }
+          ]
+        }
+      ]
     },
     {
       "id": 2,
       "userId": 2,
-      "products": []
+      "products": [
+        {
+          "id": 7,
+          "name": "LBel",
+          "description": "2-Propanol",
+          "rating": 3,
+          "imgUrl": "http://dummyimage.com/212x144.jpg/ff4444/ffffff",
+          "price": "$99.91",
+          "category": "sporting",
+          "reviews": [
+            {
+              "description": "architect revolutionary deliverables",
+              "rating": 2
+            },
+            {
+              "description": "orchestrate dynamic schemas",
+              "rating": 2
+            },
+            {
+              "description": "aggregate integrated convergence",
+              "rating": 4
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "name": "Cholestyramine",
+          "description": "Help reduce cholesteral in the system",
+          "rating": 3,
+          "imgUrl": "http://dummyimage.com/204x175.jpg/5fa2dd/ffffff",
+          "price": "$67.17",
+          "category": "sporting",
+          "reviews": [
+            {
+              "description": "architect revolutionary deliverables",
+              "rating": 2
+            },
+            {
+              "description": "orchestrate dynamic schemas",
+              "rating": 2
+            },
+            {
+              "description": "aggregate integrated convergence",
+              "rating": 4
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "name": "Risperidone",
+          "description": "cephalospor/oth beta-lactm antibiot, undet, sequela",
+          "rating": 1,
+          "imgUrl": "http://dummyimage.com/212x108.bmp/cc0000/ffffff",
+          "price": "$96.84",
+          "category": "sporting",
+          "reviews": [
+            {
+              "description": "architect revolutionary deliverables",
+              "rating": 2
+            },
+            {
+              "description": "orchestrate dynamic schemas",
+              "rating": 2
+            },
+            {
+              "description": "aggregate integrated convergence",
+              "rating": 4
+            }
+          ]
+        }
+      ]
     }
   ]
   
